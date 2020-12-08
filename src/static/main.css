@@ -1,0 +1,34 @@
+body {
+  background-color: #363636;
+  color: white;
+  font-family: Arial;
+}
+
+.submit_button, .power_button_off, .power_button_on {
+  align-items: end;
+  background-color: #0f0f0f;
+  color: white;
+  font-family: "Arial Black";
+}
+
+.power_button_off, .power_button_on {
+  width: 100%;
+  height: 28px;
+}
+
+.power_button_on {
+  background-color: green;
+  color: black;
+}
+
+.power_button_off {
+  background-color: red;
+  color: black;
+}
+
+.power_form {
+  align-content: end;
+  width: 100%;
+}
+
+/*# sourceMappingURL=main.css.map */

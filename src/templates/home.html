@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% if status[5] == '0' %}
+<form method="POST" action="/power">
+    <input type="hidden" name="state" value="on">
+    <input type="submit" value="Power On">
+</form>
+{% endif %}
+
+{% if status[5] == '1' %}
+<form method="POST" action="/power">
+    <input type="hidden" name="state" value="off">
+    <input type="submit" value="Power Off">
+</form>
+{% endif %}
+
+
+<form method="POST" action="/">
+
+    <select name = "effect">
+
+        {% if status[0] == 'wipe' %}
+            <option value = "wipe" selected>Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'block' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block" selected>Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'chase' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase" selected>Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'rainbow' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow" selected>Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'rainbow_cycle' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle" selected>Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'rainbow_chase' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase" selected>Rainbow Chase</option>
+            <option value = "rave">Rave</option>
+        {% endif %}
+
+        {% if status[0] == 'rave' %}
+            <option value = "wipe">Wipe</option>
+            <option value = "block">Block</option>
+            <option value = "chase">Chase</option>
+            <option value = "rainbow">Rainbow</option>
+            <option value = "rainbow_cycle">Rainbow Cycle</option>
+            <option value = "rainbow_chase">Rainbow Chase</option>
+            <option value = "rave" selected>Rave</option>
+        {% endif %}
+
+    </select>
+
+    <div class="slidecontainer">
+        brightness
+    <input type="range" min="0" max="220" value="{{ status[4] }}" class="slider" name="brightness">
+    </div>
+
+    <input type="color" name="hexcolor" value="#{{ current_color_hex }}">
+
+    <input type="submit" value="Go">
+</form>
+
+{% endblock content %}

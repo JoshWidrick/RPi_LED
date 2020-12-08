@@ -2,16 +2,16 @@
 {% block content %}
 
 {% if status[5] == '0' %}
-<form method="POST" action="/power">
+<form method="POST" action="/power" class="power_form">
     <input type="hidden" name="state" value="on">
-    <input type="submit" value="Power On">
+    <input type="submit" value="Power On" class="power_button_on">
 </form>
 {% endif %}
 
 {% if status[5] == '1' %}
-<form method="POST" action="/power">
+<form method="POST" action="/power" class="power_form">
     <input type="hidden" name="state" value="off">
-    <input type="submit" value="Power Off">
+    <input type="submit" value="Power Off" class="power_button_off">
 </form>
 {% endif %}
 
@@ -99,7 +99,7 @@
 
     <input type="color" name="hexcolor" value="#{{ current_color_hex }}">
 
-    <input type="submit" value="Go">
+    <input type="submit" value="Submit" class="submit_button">
 </form>
 
 {% endblock content %}

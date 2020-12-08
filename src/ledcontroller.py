@@ -269,7 +269,7 @@ def starlight_a(strip, status):
                 pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
                 count = count + 1
             elif pixels_to_dim_info[i]['dim_level'] > 0:
-                pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
+                pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
                                                                        dim_level=pixels_to_dim_info[i]['dim_level'])
                 count = count + 1
         time.sleep(0.1)

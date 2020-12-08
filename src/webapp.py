@@ -4,7 +4,6 @@ import sys
 
 sys.stdout.write('*===* STARTING APPLICATION *===* \n')
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'JgMWQ3X2c286Zv2gVqmC6PbPbWAcqZKg'
 
@@ -26,32 +25,26 @@ def check_status():
 
 
 def update_status(mode, r, g, b, brightness, power):
+    sys.stdout.write('updating status... ')
     with open("./file/status.txt", "w") as f:
         try:
             new_status = f'{mode},{r},{g},{b},{brightness},{power}'
             f.write(new_status)
-            return "success"
+            sys.stdout.write('success. \n')
         except Exception as e:
-            return "failed"
+            sys.stdout.write('failed. \n')
 
 
 @app.route('/', methods=('GET', 'POST'))
 def submit():
-
     if request.method == 'POST':
-
         new_effect = request.form['effect']
         new_color_hex = request.form['hexcolor'][1:]
         new_color = hex_to_rgb(new_color_hex)
         new_brightness = request.form['brightness']
         default_power = 1
-
-        sys.stdout.write('updating status... ')
-        x = update_status(new_effect, new_color[0], new_color[1], new_color[2], new_brightness, default_power)
-        sys.stdout.write(f'{x}. \n')
-
+        update_status(new_effect, new_color[0], new_color[1], new_color[2], new_brightness, default_power)
         return redirect('/')
-
     status = check_status()
     current_color_hex = rgb_to_hex(status[1], status[2], status[3])
     return render_template('home.html', status=status, current_color_hex=current_color_hex)
@@ -62,13 +55,9 @@ def power():
     state = request.form['state']
     status = check_status()
     if state == 'on':
-        sys.stdout.write('updating status... ')
-        x = update_status(status[0], status[1], status[2], status[3], status[4], 1)
-        sys.stdout.write(f'{x}. \n')
+        update_status(status[0], status[1], status[2], status[3], status[4], 1)
     elif state == 'off':
-        sys.stdout.write('updating status... ')
-        x = update_status(status[0], status[1], status[2], status[3], status[4], 0)
-        sys.stdout.write(f'{x}. \n')
+        update_status(status[0], status[1], status[2], status[3], status[4], 0)
     return redirect('/')
 
 

@@ -35,7 +35,6 @@ def check_status():
 
 
 def color_wipe(strip, color, wait_ms=30):
-    """Wipe color across display a pixel at a time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
@@ -49,7 +48,6 @@ def color_block(strip, color):
 
 
 def theater_chase(strip, color, wait_ms=50, iterations=1):
-    """Movie theater light style chaser animation."""
     for j in range(iterations):
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
@@ -61,7 +59,6 @@ def theater_chase(strip, color, wait_ms=50, iterations=1):
 
 
 def wheel(pos):
-    """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
         return Color(pos * 3, 255 - pos * 3, 0)
     elif pos < 170:
@@ -73,7 +70,6 @@ def wheel(pos):
 
 
 def rainbow(strip, wait_ms=20, iterations=1):
-    """Draw rainbow that fades across all pixels at once."""
     for j in range(256 * iterations):
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, wheel((i + j) & 255))
@@ -82,7 +78,6 @@ def rainbow(strip, wait_ms=20, iterations=1):
 
 
 def rainbow_cycle(strip, wait_ms=50, iterations=1):
-    """Draw rainbow that uniformly distributes itself across all pixels."""
     for j in range(256*iterations):
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))

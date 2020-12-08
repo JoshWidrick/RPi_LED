@@ -81,54 +81,6 @@ def power():
     return redirect('/')
 
 
-@app.route('/color')
-def color():
-    # sets solid color of strip through action, defaults to converting hex value, if not provided, rgb values used
-    # example request for cyan: /color?action=wipe&g=255&b=255
-    # r is not provided, as its default of 0 is what is required
-    # way to use hex value /color?action=wipevalue=00FFFF
-    action = request.args.get('action', default='wipe', type=str)
-    value = request.args.get('value', default=None, type=str)
-    r = request.args.get('r', default=0, type=int)
-    g = request.args.get('g', default=0, type=int)
-    b = request.args.get('b', default=0, type=int)
-
-    if value is not None:
-        val = hex_to_rgb(value)
-        r = val[0]
-        g = val[1]
-        b = val[2]
-
-    if action.lower() == 'wipe':
-        colorWipe(strip1, Color(r, g, b))
-        # colorWipe(strip2, Color(r, g, b))
-    elif action.lower() == 'block':
-        colorBlock(strip1, Color(r, g, b))
-        # colorBlock(strip2, Color(r, g, b))
-
-    return 'success'
-
-
-@app.route('/rainbow')
-def rainbow():
-    action = request.args.get('action', default=None, type=str)
-
-    if action == 'cycle':
-        rainbowCycle(strip1)
-        # rainbowCycle(strip2)
-    elif action == 'chase':
-        theaterChaseRainbow(strip1)
-        # theaterChaseRainbow(strip2)
-    else:
-        process = Process(target=rainbow(strip1), daemon=True)
-        process.start()
-        print('going')
-        # task = asyncio.create_task(rainbow(strip1), loop=0)
-        # rainbow(strip2)
-
-    return 'success'
-
-
 sys.stdout.write('starting flask app. \n')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=False)

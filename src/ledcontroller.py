@@ -116,20 +116,24 @@ def main_check():
                     color_block(strip1, form_color(colors))
                 elif colors[0].lower() == 'chase':
                     strip1.setBrightness(255)
-                    theater_chase(strip1, form_color(colors))
-                    main_check()
+                    while check_status() == colors:
+                        theater_chase(strip1, form_color(colors))
+                    # main_check()
                 elif colors[0].lower() == 'rainbow':
                     strip1.setBrightness(int(colors[4]))
-                    rainbow(strip1)
-                    main_check()
+                    while check_status() == colors:
+                        rainbow(strip1)
+                    # main_check()
                 elif colors[0].lower() == 'rainbow_cycle':
                     strip1.setBrightness(int(colors[4]))
-                    rainbow_cycle(strip1)
-                    main_check()
+                    while check_status() == colors:
+                        rainbow_cycle(strip1)
+                    # main_check()
                 elif colors[0].lower() == 'rainbow_chase':
                     strip1.setBrightness(int(colors[4]))
-                    theater_chase_rainbow(strip1)
-                    main_check()
+                    while check_status() == colors:
+                        theater_chase_rainbow(strip1)
+                    # main_check()
         except Exception as e:
             print(e)
             print("could not read file, trying again")

@@ -241,45 +241,75 @@ def starlight_a(strip, status):
     strip.show()
     pixels_to_dim = pixels_to_shine(strip, normal_weight=(98, 2), on_weight=(85, 15), on_max_length=2)
     pixels_to_dim_solo = [i for i in range(strip.numPixels()) if pixels_to_dim[i] == 1]
-    pixels_to_dim_info = {i: {'wait_time': random.randint(1, 50), 'dim_level': 0} for i in pixels_to_dim_solo}
+    pixels_to_dim_info = {i: {'wait_time': random.randint(1, 50), 'dim_level': 0, 'dim': 'in'} for i in pixels_to_dim_solo}
+
     while True:
         count = 0
         for i in pixels_to_dim_info:
-            if pixels_to_dim_info[i]['wait_time'] > 0:
-                pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
-                count = count + 1
-            elif pixels_to_dim_info[i]['dim_level'] < 100:
-                pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
-                                                                       dim_level=pixels_to_dim_info[i]['dim_level'])
-                count = count + 1
-        time.sleep(0.1)
+            if pixels_to_dim_info[i]['dim'] == 'in':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] < 100:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
+                                                                           dim_level=pixels_to_dim_info[i]['dim_level'])
+                    count = count + 1
+                elif pixels_to_dim_info[i]['wait_time'] <= 0 and pixels_to_dim_info[i]['dim_level'] >= 100:
+                    pixels_to_dim_info[i]['dim'] = 'out'
+                    pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
+                    count = count + 1
+            elif pixels_to_dim_info[i]['dim'] == 'out':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] > 100:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
+                                                                            dim_level=pixels_to_dim_info[i]['dim_level'])
+                    count = count + 1
+                # elif pixels_to_dim_info[i]['wait_time'] <= 0 and pixels_to_dim_info[i]['dim_level'] >= 100:
+                #     pixels_to_dim_info[i]['dim'] = 'out'
         if count == 0:
             break
-    for i in range(strip.numPixels()):
-        if i in pixels_to_dim_solo:
-            strip.setPixelColor(i, form_color(status))
-            strip.show()
-    # dim_pixels_in(strip, pixels_to_dim_solo, status)
-    for i in pixels_to_dim_info:
-        pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
-    while True:
-        count = 0
-        for i in pixels_to_dim_info:
-            if pixels_to_dim_info[i]['wait_time'] > 0:
-                pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
-                count = count + 1
-            elif pixels_to_dim_info[i]['dim_level'] > 0:
-                pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
-                                                                       dim_level=pixels_to_dim_info[i]['dim_level'])
-                count = count + 1
-        time.sleep(0.1)
-        if count == 0:
-            break
-    for i in range(strip.numPixels()):
-        if i in pixels_to_dim_solo:
-            strip.setPixelColor(i, Color(0, 0, 0))
-            strip.show()
-    # dim_pixels_out(strip, pixels_to_dim_solo, status)
+
+
+    # while True:
+    #     count = 0
+    #     for i in pixels_to_dim_info:
+    #         if pixels_to_dim_info[i]['wait_time'] > 0:
+    #             pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+    #             count = count + 1
+    #         elif pixels_to_dim_info[i]['dim_level'] < 100:
+    #             pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
+    #                                                                    dim_level=pixels_to_dim_info[i]['dim_level'])
+    #             count = count + 1
+    #     time.sleep(0.1)
+    #     if count == 0:
+    #         break
+    # for i in range(strip.numPixels()):
+    #     if i in pixels_to_dim_solo:
+    #         strip.setPixelColor(i, form_color(status))
+    #         strip.show()
+    # # dim_pixels_in(strip, pixels_to_dim_solo, status)
+    # for i in pixels_to_dim_info:
+    #     pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
+    # while True:
+    #     count = 0
+    #     for i in pixels_to_dim_info:
+    #         if pixels_to_dim_info[i]['wait_time'] > 0:
+    #             pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+    #             count = count + 1
+    #         elif pixels_to_dim_info[i]['dim_level'] > 0:
+    #             pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
+    #                                                                     dim_level=pixels_to_dim_info[i]['dim_level'])
+    #             count = count + 1
+    #     time.sleep(0.1)
+    #     if count == 0:
+    #         break
+    # for i in range(strip.numPixels()):
+    #     if i in pixels_to_dim_solo:
+    #         strip.setPixelColor(i, Color(0, 0, 0))
+    #         strip.show()
+    # # dim_pixels_out(strip, pixels_to_dim_solo, status)
 
 
 def starlight_b(strip, status):

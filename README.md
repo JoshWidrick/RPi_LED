@@ -3,7 +3,8 @@ RPi LED
 
 Overview
 ---
-This is a simple system to control programmable LED strip(s) with a Raspberry Pi.
+This is a simple system to control programmable LED strip(s) with a Raspberry Pi. 
+The system includes a Flask app for user control.
 
 Hardware
 ---

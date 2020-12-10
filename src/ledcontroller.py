@@ -26,6 +26,12 @@ def form_color(status, brightness_override=-1):
     return Color(form_value(1), form_value(2), form_value(3))
 
 
+def form_secondary_color(status, brightness_override=-1):
+    def form_value(loc):
+        return int((brightness_override if brightness_override != -1 else int(status[4])) * int(status[loc]) / 255)
+    return Color(form_value(6), form_value(7), form_value(8))
+
+
 def check_status():
     with open("./file/status.txt", "r") as f:
         try:
@@ -46,6 +52,75 @@ def color_block(strip, color):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
     strip.show()
+
+
+def color_block_every_other(strip, color, scolor):
+    count = 0
+    for i in range(0, strip.numPixels()):
+        if count == 0:
+            strip.setPixelColor(i, color)
+            count = 1
+        elif count == 1:
+            strip.setPixelColor(i, scolor)
+            count = 0
+    strip.show()
+
+
+def color_block_every_five(strip, color, scolor):
+    count = 0
+    for i in range(0, strip.numPixels()):
+        if count < 5:
+            strip.setPixelColor(i, color)
+            count = count + 1
+        elif 5 <= count < 10:
+            strip.setPixelColor(i, scolor)
+            count = count + 1
+            if count == 10:
+                count = 0
+    strip.show()
+
+
+def color_block_every_ten(strip, color, scolor):
+    count = 0
+    for i in range(0, strip.numPixels()):
+        if count < 10:
+            strip.setPixelColor(i, color)
+            count = count + 1
+        elif 10 <= count < 20:
+            strip.setPixelColor(i, scolor)
+            count = count + 1
+            if count == 20:
+                count = 0
+    strip.show()
+
+
+def color_block_half(strip, color, scolor):
+    for i in range(int(strip.numPixels()/2)):
+        strip.setPixelColor(i, color)
+    for j in range(int(strip.numPixels()/2), strip.numPixels()):
+        strip.setPixelColor(j, scolor)
+    strip.show()
+
+
+def rotate_half(strip, status):
+    color = form_color(status)
+    scolor = form_secondary_color(status)
+    current_colors = [0 for i in range(int(strip.numPixels() / 2))]
+    current_colors = current_colors + [1 for j in range(int(strip.numPixels() / 2), strip.numPixels())]
+    while True:
+        for x in range(strip.numPixels()):
+            if current_colors[x] == 0:
+                strip.setPixelColor(x, color)
+            else:
+                strip.setPixelColor(x, scolor)
+        strip.show()
+
+        y = current_colors.pop(0)
+        current_colors.append(y)
+
+        time.sleep(0.2)
+        if check_status() != status:
+            break
 
 
 def theater_chase(strip, color, wait_ms=50, iterations=1):
@@ -189,18 +264,24 @@ def rave_rainbow_a(strip):
 #     #     run_starlight_helper(strip, color, wait_sec=0.7)
 
 
-def dim_pixel_out_step(strip, pixel_to_dim, status, dim_level=100):
+def dim_pixel_out_step(strip, pixel_to_dim, status, dim_level=100, color=0):
     dim_level = dim_level - 1
     bo = int(status[4]) * dim_level / 100
-    strip.setPixelColor(pixel_to_dim, form_color(status, brightness_override=bo))
+    if color == 0:
+        strip.setPixelColor(pixel_to_dim, form_color(status, brightness_override=bo))
+    elif color == 1:
+        strip.setPixelColor(pixel_to_dim, form_secondary_color(status, brightness_override=bo))
     strip.show()
     return dim_level
 
 
-def dim_pixel_in_step(strip, pixel_to_dim, status, dim_level=0):
+def dim_pixel_in_step(strip, pixel_to_dim, status, dim_level=0, color=0):
     dim_level = dim_level + 1
     bo = int(status[4]) * dim_level / 100
-    strip.setPixelColor(pixel_to_dim, form_color(status, brightness_override=bo))
+    if color == 0:
+        strip.setPixelColor(pixel_to_dim, form_color(status, brightness_override=bo))
+    elif color == 1:
+        strip.setPixelColor(pixel_to_dim, form_secondary_color(status, brightness_override=bo))
     strip.show()
     return dim_level
 
@@ -239,67 +320,84 @@ def starlight_a(strip, status):
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
-    pixels_to_dim = pixels_to_shine(strip, normal_weight=(98, 2), on_weight=(85, 15), on_max_length=2)
+    pixels_to_dim = pixels_to_shine(strip, normal_weight=(96, 4), on_weight=(85, 15), on_max_length=2)
     pixels_to_dim_solo = [i for i in range(strip.numPixels()) if pixels_to_dim[i] == 1]
-    pixels_to_dim_info = {i: {'wait_time': random.randint(1, 50), 'dim_level': 0} for i in pixels_to_dim_solo}
+    pixels_to_dim_info = {i: {'wait_time': random.randint(1, 1000), 'dim_level': 0, 'dim': 'in'} for i in pixels_to_dim_solo}
+
     while True:
         count = 0
         for i in pixels_to_dim_info:
-            if pixels_to_dim_info[i]['wait_time'] > 0:
-                pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
-                count = count + 1
-            elif pixels_to_dim_info[i]['dim_level'] < 100:
-                pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
-                                                                       dim_level=pixels_to_dim_info[i]['dim_level'])
-                count = count + 1
-        time.sleep(0.1)
-        if count == 0:
+            if pixels_to_dim_info[i]['dim'] == 'in':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] < 100:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
+                                                                           dim_level=pixels_to_dim_info[i]['dim_level'])
+                    count = count + 1
+                elif pixels_to_dim_info[i]['wait_time'] <= 0 and pixels_to_dim_info[i]['dim_level'] >= 100:
+                    pixels_to_dim_info[i]['dim'] = 'out'
+                    pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
+                    count = count + 1
+            elif pixels_to_dim_info[i]['dim'] == 'out':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] > 0:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
+                                                                            dim_level=pixels_to_dim_info[i]['dim_level'])
+                    count = count + 1
+        if count == 0 or check_status() != status:
             break
-    for i in range(strip.numPixels()):
-        if i in pixels_to_dim_solo:
-            strip.setPixelColor(i, form_color(status))
-            strip.show()
-    # dim_pixels_in(strip, pixels_to_dim_solo, status)
-    for i in pixels_to_dim_info:
-        pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
-    while True:
-        count = 0
-        for i in pixels_to_dim_info:
-            if pixels_to_dim_info[i]['wait_time'] > 0:
-                pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
-                count = count + 1
-            elif pixels_to_dim_info[i]['dim_level'] > 0:
-                pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
-                                                                       dim_level=pixels_to_dim_info[i]['dim_level'])
-                count = count + 1
-        time.sleep(0.1)
-        if count == 0:
-            break
-    for i in range(strip.numPixels()):
-        if i in pixels_to_dim_solo:
-            strip.setPixelColor(i, Color(0, 0, 0))
-            strip.show()
-    # dim_pixels_out(strip, pixels_to_dim_solo, status)
 
 
 def starlight_b(strip, status):
-    '''
-    light up whole strip, randomly twinkle individual leds, in pairs from 1 to 3
-    turn off for random time between .1 and 1 seconds
-    dim in and out
-    
-    :param strip: 
-    :param color: 
-    :return: 
-    '''
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, form_color(status))
+        strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
-    pixels_to_dim = pixels_to_shine(strip, normal_weight=(97, 3), on_weight=(70, 30), on_max_length=2)
+    pixels_to_dim = pixels_to_shine(strip, normal_weight=(96, 4), on_weight=(85, 15), on_max_length=2)
     pixels_to_dim_solo = [i for i in range(strip.numPixels()) if pixels_to_dim[i] == 1]
-    dim_pixels_out(strip, pixels_to_dim_solo, status)
-    time.sleep(5)
-    dim_pixels_in(strip, pixels_to_dim_solo, status)
+    pixels_to_dim_info = {i: {'wait_time': random.randint(1, 1000), 'dim_level': 0, 'dim': 'in',
+                              'color': random.randint(0, 2)} for i in pixels_to_dim_solo}
+
+    while True:
+        count = 0
+        for i in pixels_to_dim_info:
+
+            if pixels_to_dim_info[i]['dim'] == 'in':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] < 100:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_in_step(strip, int(i), status,
+                                                                           dim_level=pixels_to_dim_info[i]['dim_level'],
+                                                                           color=pixels_to_dim_info[i]['color'])
+                    count = count + 1
+                elif pixels_to_dim_info[i]['wait_time'] <= 0 and pixels_to_dim_info[i]['dim_level'] >= 100:
+                    pixels_to_dim_info[i]['dim'] = 'out'
+                    pixels_to_dim_info[i]['wait_time'] = random.randint(1, 50)
+                    count = count + 1
+            elif pixels_to_dim_info[i]['dim'] == 'out':
+                if pixels_to_dim_info[i]['wait_time'] > 0:
+                    pixels_to_dim_info[i]['wait_time'] = pixels_to_dim_info[i]['wait_time'] - 1
+                    count = count + 1
+                elif pixels_to_dim_info[i]['dim_level'] > 0:
+                    pixels_to_dim_info[i]['dim_level'] = dim_pixel_out_step(strip, int(i), status,
+                                                                            dim_level=pixels_to_dim_info[i]['dim_level'],
+                                                                            color=pixels_to_dim_info[i]['color'])
+                    count = count + 1
+        if count == 0 or check_status() != status:
+            break
+
+# def starlight_b(strip, status):
+#     for i in range(strip.numPixels()):
+#         strip.setPixelColor(i, form_color(status))
+#     strip.show()
+#     pixels_to_dim = pixels_to_shine(strip, normal_weight=(97, 3), on_weight=(70, 30), on_max_length=2)
+#     pixels_to_dim_solo = [i for i in range(strip.numPixels()) if pixels_to_dim[i] == 1]
+#     dim_pixels_out(strip, pixels_to_dim_solo, status)
+#     time.sleep(5)
+#     dim_pixels_in(strip, pixels_to_dim_solo, status)
 
 
 def starlight_rainbow_helper(strip):
@@ -335,6 +433,21 @@ def main_check():
                 elif status[0].lower() == 'block':
                     strip1.setBrightness(255)
                     color_block(strip1, form_color(status))
+                elif status[0].lower() == 'block_every_other':
+                    strip1.setBrightness(255)
+                    color_block_every_other(strip1, form_color(status), form_secondary_color(status))
+                elif status[0].lower() == 'block_every_five':
+                    strip1.setBrightness(255)
+                    color_block_every_five(strip1, form_color(status), form_secondary_color(status))
+                elif status[0].lower() == 'block_every_ten':
+                    strip1.setBrightness(255)
+                    color_block_every_ten(strip1, form_color(status), form_secondary_color(status))
+                elif status[0].lower() == 'block_half':
+                    strip1.setBrightness(255)
+                    color_block_half(strip1, form_color(status), form_secondary_color(status))
+                elif status[0].lower() == 'rotate_half':
+                    strip1.setBrightness(255)
+                    rotate_half(strip1, status)
                 elif status[0].lower() == 'chase':
                     strip1.setBrightness(255)
                     while check_status() == status:

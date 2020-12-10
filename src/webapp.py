@@ -24,11 +24,11 @@ def check_status():
             return 'failed'
 
 
-def update_status(mode, r, g, b, brightness, power):
+def update_status(mode, r, g, b, brightness, power, sr, sg, sb):
     sys.stdout.write('updating status... ')
     with open("./file/status.txt", "w") as f:
         try:
-            new_status = f'{mode},{r},{g},{b},{brightness},{power}'
+            new_status = f'{mode},{r},{g},{b},{brightness},{power},{sr},{sg},{sb}'
             f.write(new_status)
             sys.stdout.write('success. \n')
         except Exception as e:
@@ -41,13 +41,18 @@ def submit():
         new_effect = request.form['effect']
         new_color_hex = request.form['hexcolor'][1:]
         new_color = hex_to_rgb(new_color_hex)
+        new_secondary_color_hex = request.form['shexcolor'][1:]
+        new_secondary_color = hex_to_rgb(new_secondary_color_hex)
         new_brightness = request.form['brightness']
         default_power = 1
-        update_status(new_effect, new_color[0], new_color[1], new_color[2], new_brightness, default_power)
+        update_status(new_effect, new_color[0], new_color[1], new_color[2],
+                      new_brightness, default_power, new_secondary_color[0],
+                      new_secondary_color[1], new_secondary_color[2])
         return redirect('/')
     status = check_status()
     current_color_hex = rgb_to_hex(status[1], status[2], status[3])
-    return render_template('home.html', status=status, current_color_hex=current_color_hex)
+    current_secondary_color_hex = rgb_to_hex(status[6], status[7], status[8])
+    return render_template('home.html', status=status, current_color_hex=current_color_hex, current_secondary_color_hex=current_secondary_color_hex)
 
 
 @app.route('/power', methods=['POST'])
@@ -55,9 +60,9 @@ def power():
     state = request.form['state']
     status = check_status()
     if state == 'on':
-        update_status(status[0], status[1], status[2], status[3], status[4], 1)
+        update_status(status[0], status[1], status[2], status[3], status[4], 1, status[6], status[7], status[8])
     elif state == 'off':
-        update_status(status[0], status[1], status[2], status[3], status[4], 0)
+        update_status(status[0], status[1], status[2], status[3], status[4], 0, status[6], status[7], status[8])
     return redirect('/')
 
 

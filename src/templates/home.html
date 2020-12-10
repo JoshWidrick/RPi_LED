@@ -21,183 +21,105 @@
     <select name = "effect">
 
         {% if status[0] == 'wipe' %}
-            <option value = "wipe" selected>Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "wipe" selected>Wipe</option>
+        {% else %}
+        <option value = "wipe">Wipe</option>
         {% endif %}
 
         {% if status[0] == 'block' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block" selected>Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "block" selected>Block</option>
+        {% else %}
+        <option value = "block">Block</option>
+        {% endif %}
+
+        {% if status[0] == 'block_every_other' %}
+        <option value = "block_every_other" selected>Block Every Other</option>
+        {% else %}
+        <option value = "block_every_other">Block Every Other</option>
+        {% endif %}
+
+        {% if status[0] == 'block_every_five' %}
+        <option value = "block_every_five" selected>Block Every Five</option>
+        {% else %}
+        <option value = "block_every_five">Block Every Five</option>
+        {% endif %}
+
+        {% if status[0] == 'block_every_ten' %}
+        <option value = "block_every_ten" selected>Block Every Ten</option>
+        {% else %}
+        <option value = "block_every_ten">Block Every Ten</option>
+        {% endif %}
+
+        {% if status[0] == 'block_half' %}
+        <option value = "block_half" selected>Block Half's</option>
+        {% else %}
+        <option value = "block_half">Block Half's</option>
+        {% endif %}
+
+        {% if status[0] == 'rotate_half' %}
+        <option value = "rotate_half" selected>Rotate Half's</option>
+        {% else %}
+        <option value = "rotate_half">Rotate Half's</option>
         {% endif %}
 
         {% if status[0] == 'chase' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase" selected>Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "chase" selected>Chase</option>
+        {% else %}
+        <option value = "chase">Chase</option>
         {% endif %}
 
         {% if status[0] == 'rainbow' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow" selected>Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rainbow" selected>Rainbow</option>
+        {% else %}
+        <option value = "rainbow">Rainbow</option>
         {% endif %}
 
         {% if status[0] == 'rainbow_cycle' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle" selected>Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rainbow_cycle" selected>Rainbow Cycle</option>
+        {% else %}
+        <option value = "rainbow_cycle">Rainbow Cycle</option>
         {% endif %}
 
         {% if status[0] == 'rainbow_chase' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase" selected>Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rainbow_chase" selected>Rainbow Chase</option>
+        {% else %}
+        <option value = "rainbow_chase">Rainbow Chase</option>
         {% endif %}
 
         {% if status[0] == 'rave_a' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a" selected>Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rave_a" selected>Rave A</option>
+        {% else %}
+        <option value = "rave_a">Rave A</option>
         {% endif %}
 
         {% if status[0] == 'rave_b' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b" selected>Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rave_b" selected>Rave B</option>
+        {% else %}
+        <option value = "rave_b">Rave B</option>
         {% endif %}
 
         {% if status[0] == 'rave_rainbow_a' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a" selected>Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "rave_rainbow_a" selected>Rave Rainbow A</option>
+        {% else %}
+        <option value = "rave_rainbow_a">Rave Rainbow A</option>
         {% endif %}
 
         {% if status[0] == 'starlight_a' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a" selected>Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "starlight_a" selected>Starlight A</option>
+        {% else %}
+        <option value = "starlight_a">Starlight A</option>
         {% endif %}
 
         {% if status[0] == 'starlight_b' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b" selected>Starlight B</option>
-            <option value = "starlight_rainbow">Starlight Rainbow</option>
+        <option value = "starlight_b" selected>Starlight B</option>
+        {% else %}
+        <option value = "starlight_b">Starlight B</option>
         {% endif %}
 
         {% if status[0] == 'starlight_rainbow' %}
-            <option value = "wipe">Wipe</option>
-            <option value = "block">Block</option>
-            <option value = "chase">Chase</option>
-            <option value = "rainbow">Rainbow</option>
-            <option value = "rainbow_cycle">Rainbow Cycle</option>
-            <option value = "rainbow_chase">Rainbow Chase</option>
-            <option value = "rave_a">Rave A</option>
-            <option value = "rave_b">Rave B</option>
-            <option value = "rave_rainbow_a">Rave Rainbow A</option>
-            <option value = "starlight_a">Starlight A</option>
-            <option value = "starlight_b">Starlight B</option>
-            <option value = "starlight_rainbow" selected>Starlight Rainbow</option>
+        <option value = "starlight_rainbow" selected>Starlight Rainbow</option>
+        {% else %}
+        <option value = "starlight_rainbow">Starlight Rainbow</option>
         {% endif %}
 
     </select>
@@ -207,7 +129,10 @@
     <input type="range" min="0" max="220" value="{{ status[4] }}" class="slider" name="brightness">
     </div>
 
+    primary color:
     <input type="color" name="hexcolor" value="#{{ current_color_hex }}">
+    secondary color:
+    <input type="color" name="shexcolor" value="#{{ current_secondary_color_hex }}">
 
     <input type="submit" value="Submit" class="submit_button">
 </form>

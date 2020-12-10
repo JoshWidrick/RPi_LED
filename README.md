@@ -23,10 +23,10 @@ should be powered through its usual power port (USB-C for Pi 4 Model B).
 ```
 Connecting Strips to Pi:
 ```
-The connection from the stips to the Pi is simple. You must use a GPIO port that supports PMW. In my case, I have
-two strips, so I used the GPIO12 and GPIO18 pins for the data connection. This is reflected in src/config.py. If
-you set your data ports up differently for some reason, or only have one strip, you will have to update src/config.py
-and possibly the strip formation in src/ledcontroller.py.
+The connection from the stips to the Pi is simple. You must use a GPIO port that supports PMW. In my case, 
+I have two strips, so I used the GPIO12 and GPIO18 pins for the data connection. This is reflected in 
+src/config.py. If you set your data ports up differently for some reason, or only have one strip, you 
+will have to update src/config.py and possibly the strip formation in src/ledcontroller.py.
 ```
 
 Usage

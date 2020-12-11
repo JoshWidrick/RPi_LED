@@ -31,4 +31,5 @@ will have to update src/config.py and possibly the strip formation in src/ledcon
 
 Usage
 ---
-Must run both webapp.py and ledcontroller.py as superuser in separate console windows. Something such as TMUX helps alot. 
+Must run both webapp.py and ledcontroller.py as superuser in separate console windows. 
+Something such as TMUX helps alot. 

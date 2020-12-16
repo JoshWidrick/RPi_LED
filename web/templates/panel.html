@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container_fluid">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    
+
+    <div class="container-fluid" style="padding: 12px; margin: 0 24px;">
+        <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <!-- want a selection box, that updates the border color, and selected button color and display text -->
+            <!-- then custom inputs for each  -->
+            <input type="radio" class="btn-check" name="options" id="starlight" autocomplete="off">
+            <label class="btn btn-secondary" for="starlight">Starlight</label>
+
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <input type="radio" class="btn-check" name="options" id="block" autocomplete="off">
+            <label class="btn btn-secondary" for="block">Block</label>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off">
+            <label class="btn btn-secondary" for="option1">Starlight</label>
+        </div>
+    </div>
+    </div>
+    
+    <!-- at the bottom, color selector, brightness and submit button -->
+
+
+</div>
+
+{% endblock content %}

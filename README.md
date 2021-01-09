@@ -32,6 +32,11 @@ src/config.py. If you set your data ports up differently for some reason, or onl
 will have to update src/config.py and possibly the strip formation in src/ledcontroller.py.
 
 
+Installation
+---
+/home/pi/leds copy in /src for all controllers, and /web into the first. 
+
+
 Usage
 ---
 Must run both webapp.py and ledcontroller.py as superuser in separate console windows. 

@@ -25,6 +25,11 @@ def status():
     return jsonify({'status': str(get_status())})
 
 
+@app.route('/ping')
+def ping():
+    return 'success'
+
+
 sys.stdout.write('starting flask app. \n')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=6969, debug=False)

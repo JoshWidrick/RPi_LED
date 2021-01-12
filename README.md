@@ -41,3 +41,28 @@ Usage
 ---
 Must run both webapp.py and ledcontroller.py as superuser in separate console windows. 
 Something such as TMUX helps alot. 
+
+
+Modes
+---
+#### Block:
+Instantly sets the strip to the chosen color(s).
+
+#### Wipe:
+Sets the strip to the chosen color(s) by wiping the state.
+
+#### Starlight:
+Sets individual LEDs to 'twinkle' like a star (dim on and dim off).
+
+#### Chase:
+Sets individual or blocks of LEDs to 'chase' through the strip.
+
+#### Rave:
+
+#### Wave:
+
+#### Breathing:
+
+#### Rainbow:
+All the other modes allow for rainbow color settings, but this is something special (it's just a rainbow
+wave, but still here cause it inspired a lot).

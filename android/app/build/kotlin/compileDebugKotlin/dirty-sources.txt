@@ -1,0 +1,4 @@
+C:\Users\joshu\OneDrive\Documents\GitHub\RPi_LED\android\app\src\main\java\com\joshuawidrick\rpi_led_android\MainActivity.kt
+C:\Users\joshu\OneDrive\Documents\GitHub\RPi_LED\android\app\src\main\java\com\joshuawidrick\rpi_led_android\ui\main\PageViewModel.kt
+C:\Users\joshu\OneDrive\Documents\GitHub\RPi_LED\android\app\src\main\java\com\joshuawidrick\rpi_led_android\ui\main\PlaceholderFragment.kt
+C:\Users\joshu\OneDrive\Documents\GitHub\RPi_LED\android\app\src\main\java\com\joshuawidrick\rpi_led_android\ui\main\SectionsPagerAdapter.kt

@@ -419,6 +419,37 @@ def starlight_rainbow(strip):
     starlight_rainbow_helper(strip)
 
 
+def breathing(strip):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, 0)
+    strip.show()
+    test_pixel = 150
+    current_value = 0
+
+    def expand_pixel(stripx, pixel, current_valuex):
+        pixels_to_show = [pixel]
+        count = 1
+        for x in range(current_valuex):
+            to_add_plus = pixel + count
+            pixels_to_show.append(pixel+count)
+            pixels_to_show.append(pixel-count)
+            count = count + 1
+        for pix in pixels_to_show:
+            stripx.setPixelColor(pix, Color(255, 255, 255))
+        stripx.show()
+
+    def contract_pixel(stripx, pixel, current_valuex):
+        pass
+
+    for j in range(30):
+        expand_pixel(strip, test_pixel, current_value)
+        current_value = current_value + 1
+        time.sleep(0.02)
+    # for k in range(10):
+    #     contract_pixel(strip, test_pixel, current_value)
+    #     time.sleep(0.2)
+
+
 def main_check():
     with open("./file/status.txt", "r") as f:
         try:
@@ -488,6 +519,10 @@ def main_check():
                     strip1.setBrightness(255)
                     while check_status() == status:
                         starlight_rainbow(strip1)
+                elif status[0].lower() == 'breathing':
+                    strip1.setBrightness(255)
+                    while check_status() == status:
+                        breathing(strip1)
         except Exception as e:
             print(e)
             print("could not read file, trying again")

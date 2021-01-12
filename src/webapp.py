@@ -2,6 +2,9 @@ from flask import Flask, request, render_template, redirect
 import sys
 
 
+# TODO renamae and make to deamon, add all controll functionality to web, and have a system to save deamon info and send cmds to it
+
+
 sys.stdout.write('*===* STARTING APPLICATION *===* \n')
 
 app = Flask(__name__)
@@ -64,6 +67,16 @@ def power():
     elif state == 'off':
         update_status(status[0], status[1], status[2], status[3], status[4], 0, status[6], status[7], status[8])
     return redirect('/')
+
+
+@app.route('/panel', methods=['GET', 'POST'])
+def panel():
+    return render_template('panel.html')
+
+
+@app.route('/status')
+def status():
+    return ','.join(i for i in check_status())
 
 
 sys.stdout.write('starting flask app. \n')

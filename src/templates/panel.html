@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container_fluid">
+
+    <div class="row">
+        <div class="col-lg">
+            <!-- want a selection box, that updates the border color, and selected button color and display text -->
+            <!-- then custom inputs for each  -->
+        </div>
+        <div class="col-lg" id="item_block" style="border-color: #000000; border-width: 2px">
+            <input type="checkbox" name="check_block" value="Block" id="check_block" onclick="panelChecker(this, 'item_block')">
+        </div>
+        <div class="col-lg">
+            hello
+        </div>
+    </div>
+    
+    <!-- at the bottom, color selector, brightness and submit button -->
+
+</div>
+
+{% endblock content %}

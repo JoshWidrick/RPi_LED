@@ -122,6 +122,12 @@
         <option value = "starlight_rainbow">Starlight Rainbow</option>
         {% endif %}
 
+        {% if status[0] == 'breathing' %}
+        <option value = "breathing" selected>Breathing</option>
+        {% else %}
+        <option value = "breathing">Breathing</option>
+        {% endif %}
+
     </select>
 
     <div class="slidecontainer">

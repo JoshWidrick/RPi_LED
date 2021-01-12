@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container_fluid">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin: 12px 24px">
+        {% if status['power'] == '1' %}
+        <a class="btn btn-danger" href="{{ url_for('power', toggle='0', controller=controller) }}">Power Off</a>
+        {% else %}
+        <a class="btn btn-success" href="{{ url_for('power', toggle='1', controller=controller) }}">Power On</a>
+        {% endif %}
+
+        <a class="btn btn-secondary" href="{{ url_for('add') }}">Add Controller</a>
+    </div>
+
+    <div class="row">
+        <ul class="nav nav-tabs justify-content-center">
+            {% for x in controllers %}
+            <li class="nav-item">
+                {% if controller == x %}
+                <a class="nav-link active" aria-current="page" href="{{ url_for('panel', controller=x) }}">{{ x.title() }}</a>
+                {% else %}
+                <a class="nav-link" href="{{ url_for('panel', controller=x) }}">{{ x.title() }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center" style="margin: 24px 0">
+        <label class="form-label" for="brightness">Brightness: </label>
+        <input type="range" min="0" max="250" value="{{ status['brightness'] }}" class="slider" name="brightness" id="brightness">
+
+        <label class="form-label" for="hexcolor">Primary Color: </label>
+        <input type="color" name="hexcolor" value="#FFFFFF" id="hexcolor">
+        <label class="form-label" for="shexcolor">Secondary Color: </label>
+        <input type="color" name="shexcolor" value="#FFFFFF" id="shexcolor">
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center" style="margin: 24px 0">
+        <label class="form-label" for="speed">Speed Modifier: </label>
+        <input type="range" min="0" max="100" value="{{ status['speed'] }}" class="slider" name="speed" id="speed">
+
+        <label class="form-label" for="wait_time">Wait Time (ms): </label>
+        <input type="text" name="wait_time" value="50" id="wait_time">
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center" style="margin: 24px 0">
+        <label class="form-label" for="percentage">Occurrence Percentage: </label>
+        <input type="range" min="0" max="100" value="{{ status['percentage'] }}" class="slider" name="percentage" id="percentage">
+
+        <label class="form-label" for="spercentage">Secondary Percentage: </label>
+        <input type="range" min="0" max="100" value="{{ status['spercentage'] }}" class="slider" name="spercentage" id="spercentage">
+    </div>
+
+
+
+    <div class="container-fluid" style="padding: 12px; margin: 0 24px;">
+        <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <!-- want a selection box, that updates the border color, and selected button color and display text -->
+            <!-- then custom inputs for each  -->
+            <input type="radio" class="btn-check" name="options" id="starlight" autocomplete="off">
+            <label class="btn btn-secondary" for="starlight">Starlight</label>
+
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <input type="radio" class="btn-check" name="options" id="block" autocomplete="off">
+            <label class="btn btn-secondary" for="block">Block</label>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off">
+            <label class="btn btn-secondary" for="option1">Starlight</label>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+
+{% endblock content %}

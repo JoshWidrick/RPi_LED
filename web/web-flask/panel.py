@@ -17,7 +17,7 @@ def import_controllers():
 
 
 def get_controllers():
-    with open("./file/controllers.txt", "r") as f:
+    with open("file/controllers.txt", "r") as f:
         try:
             if f is None:
                 return []
@@ -27,7 +27,7 @@ def get_controllers():
 
 
 def add_controller(name, ip, port):
-    with open("./file/controllers.txt", "a") as f:
+    with open("file/controllers.txt", "a") as f:
         try:
             f.write(f'{name},{ip},{port}\n')
             print(f'{name},{ip},{port}')
